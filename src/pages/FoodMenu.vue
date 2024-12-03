@@ -12,6 +12,7 @@
       <v-col
         cols="12"
         lg="6"
+        class="pa-1"
       >
         <v-img
           src="https://foodhub-nuxt.vercel.app/_nuxt/img/bigFood.fb87b8d.png"
@@ -28,6 +29,7 @@
             v-for="img in imgs"
             :key="img"
             cols="6"
+            class="pa-1"
           >
             <v-img :src="img" />
           </v-col>
@@ -92,13 +94,22 @@
       align-tabs="start"
       color="primary"
     >
-      <v-tab value="option-1">
+      <v-tab
+        value="option-1"
+        class="text-capitalize"
+      >
         Order Online
       </v-tab>
-      <v-tab value="option-2">
+      <v-tab
+        value="option-2"
+        class="text-capitalize"
+      >
         Book A Table
       </v-tab>
-      <v-tab value="option-3">
+      <v-tab
+        value="option-3"
+        class="text-capitalize"
+      >
         Reviews
       </v-tab>
     </v-tabs>
@@ -107,10 +118,134 @@
       <v-tabs-window-item
         value="option-1"
       >
-        <div
+        <!-- 大尺寸篩選 -->
+        <div class="d-flex flex-row">
+          <div
+            class="d-none d-md-flex flex-column"
+            style="width: 280px; border-right: 1px solid #BDBDBD;"
+          >
+            <v-btn
+              v-for="(item, index) in category"
+              :key="index"
+              height="50"
+              text
+              variant="text"
+              rounded="0"
+              class=" text-left justify-start text-capitalize"
+              :class="{'selected': selectedIndex === index}"
+              @click="filterByCategory(item, index)"
+            >
+              {{ item }}
+            </v-btn>
+          </div>
+
+
+          
+          <!-- 商品展示 -->
+          <div class="w-100">
+            <v-container>
+              <div class="pa-5 d-md-none">
+                <v-btn
+                  prepend-icon="mdi-menu"
+                  class="text-capitalize"
+                  color="primary"
+                  @click="drawer = !drawer"
+                >
+                  Categories
+                </v-btn>
+              </div>
+              <h3 class="mb-3 pl-5">
+                {{ selected }}
+              </h3>
+              <v-card
+                v-for="product in filteredProducts"
+                :key="product.title"
+                class="pa-5 pt-0"
+                variant="text"
+              >
+                <v-row>
+                  <v-col
+                    cols="12"
+                    lg="10"
+                  >
+                    <v-row no-gutters>
+                      <v-col
+                        lg="3"
+                        xl="2"
+                      >
+                        <v-img
+                          :src="product.img"
+                          width="150px"
+                          height="150px"
+                          class="rounded"
+                          cover
+                        />
+                      </v-col>
+                      <v-col
+                        lg="9"
+                        xl="10"
+                      >
+                        <h4>{{ product.title }}(Full)</h4>
+                        <v-chip
+                          density="compact"
+                          size="small"
+                          class="my-2"
+                        >
+                          {{ product.cate }}
+                        </v-chip>
+                        <div class="d-flex justify-content-center align-center">
+                          <v-rating
+                            :model-value="5"
+                            density="compact"
+                            size="x-small"
+                            color="yellow-darken-2"
+                            readonly
+                          /> 
+                          <span
+                            style="line-height: 24px;font-size: 12px;"
+                            class="ml-2 text-third"
+                          >(57)</span>
+                        </div>
+                        <p
+                          style="font-size: 12px;"
+                          class="my-2"
+                        >
+                          <span
+                            class="text-decoration-line-through"
+                          >$25</span>
+                          $22.5 
+                          <span class="text-primary">10% off</span>
+                        </p>
+                        <p
+                          style="font-size: 12px;"
+                          class="text-third"
+                        >
+                          (4 Pcs mutton in chicken keema gravy)
+                        </p>
+                      </v-col>
+                    </v-row>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    lg="2"
+                    class="my-auto"
+                  >
+                    <div>
+                      <v-btn
+                        variant="outlined"
+                        color="primary"
+                      >
+                        ADD +
+                      </v-btn>
+                    </div>
+                  </v-col>
+                </v-row>
+              </v-card>
+            </v-container>
+          </div>
+          <!-- <div
           class="d-flex flex-row"
         >
-          <!--  position-relative -->
           <v-tabs
             v-model="subtab"
             color="primary"
@@ -118,7 +253,6 @@
             class="mt-5"
             style="width: 280px;border-right: 1px solid #BDBDBD;"
           >
-            <!-- position-absolute top-0 -->
             <v-tab
               v-for="(item, index) in category"
               :key="index"
@@ -137,8 +271,8 @@
                   Recommended
                 </h3>
                 <v-card
-                  v-for="i in 5"
-                  :key="i"
+                  v-for="product in products"
+                  :key="product"
                   class="pa-5"
                   variant="text"
                 >
@@ -153,7 +287,7 @@
                           xl="2"
                         >
                           <v-img
-                            src="https://foodhub-nuxt.vercel.app/_nuxt/img/4.780fc7d.png"
+                            :src="product.img"
                             width="150px"
                             height="150px"
                           />
@@ -221,6 +355,7 @@
               </v-container>
             </v-tabs-window-item>
           </v-tabs-window>
+        </div> -->
         </div>
       </v-tabs-window-item>
       <v-tabs-window-item value="option-2">
@@ -366,6 +501,33 @@
       </v-tabs-window-item>
     </v-tabs-window>
   </v-container>
+  <!-- 小尺寸篩選 -->
+  <v-navigation-drawer
+    v-model="drawer"
+    temporary
+    style="position:fixed;height: 100%;"
+  >
+    <v-toolbar class="mt-15 px-2 bg-white">
+      <v-btn
+        class="ml-auto"
+        icon="mdi-close"
+        @click="closeSidebar()"
+      />
+    </v-toolbar>
+    <v-list-item
+      v-for="(item, index) in category"
+      :key="index"
+      height="50"
+      text
+      variant="text"
+      rounded="0"
+      class=" text-left justify-start text-capitalize"
+      :class="{'selected': selectedIndex === index}"
+      @click="filterByCategory(item, index)"
+    >
+      {{ item }}
+    </v-list-item>
+  </v-navigation-drawer>
 </template>
 
 <script setup>
@@ -394,19 +556,34 @@ const imgs = ref([
   'https://foodhub-nuxt.vercel.app/_nuxt/img/foodThree.fd71db5.png',
   'https://foodhub-nuxt.vercel.app/_nuxt/img/foodFour.e242457.png',
 ])
+
+const products = ref([
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/15.15c95d2.jpg',title:'Starbucks',cate:'Recomended'},
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/16.bbc24cb.jpg',title:'Mughal Masala',cate:'DPB Special Combos'},
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/19.a1e7280.jpg',title:'Starbucks',cate:'Chineese Starters'},
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/20.ce4b89f.jpg',title:'Mughal Masala',cate:'Chinese Main Course'},
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/22.c99d20e.jpg',title:'Red Chillies',cate:'Indian Main Course'},
+  {img:'https://imgs.699pic.com/images/600/169/053.jpg!list1x.v2',title:'Cookie',cate:'Rice & Pulao'},
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/foodFour.e242457.png',title:'Hamburger',cate:'Recomended'},
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/foodOne.f29cb9f.png',title:'Spaghetti',cate:'Pasta'},
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/foodTwo.3b74f91.png',title:'Pasta',cate:'Pasta'},
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/foodThree.fd71db5.png',title:'Gnocchi',cate:'Pasta'},
+  {img:'https://tokyo-kitchen.icook.network/uploads/recipe/cover/329605/64d988a20911786c.jpg',title:'Birthday Cake',cate:'Desserts'},
+  {img:'https://assets.blog.engoo.com/wp-content/uploads/sites/3/2017/10/08092749/shutterstock_1659922546.jpg',title:'Donburi',cate:'Rice & Pulao'},  
+  {img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-hmcnCcm7eMlmevp9lsZYlPegFX6w60ZIpeGmXXizGy5S-9PYRTCMXkcBpoUTDhrHGYk&usqp=CAU',title:'Tomato beef soup',cate:'Soup & wonton'}
+])
+	
 const tab = ref('option-1')
-const subtab = ref('1')
 const category = ref([
-  'Recomended (40)',
-  'DPB Special Combos (10)',
-  'Chineese Starters (30)',
-  'Chinese Main Course (75)',
-  'Indian Main Course (63)',
-  'Rice & Pulao (7)',
-  'Desserts (1)',
-  'Soup & wonton (15)',
-  'Accompaniment (4)',
-  'Biryani (1)',
+  'Recomended',
+  'Pasta',
+  'DPB Special Combos',
+  'Chineese Starters',
+  'Chinese Main Course',
+  'Indian Main Course',
+  'Rice & Pulao',
+  'Desserts',
+  'Soup & wonton',
 ])
 const select = ref([
   'Foo',
@@ -420,4 +597,32 @@ const labels = ref([
   'Email',
   'Phone'
 ])
+const drawer =ref(false)
+const choose = ref('')
+const filteredProducts = ref(products.value);
+const selected =ref ('Recomended')
+const selectedIndex =ref(null)
+const filterByCategory = (category,index) => {
+  filteredProducts.value = products.value.filter(product => product.cate.includes(category));
+  selected.value = category
+
+  selectedIndex.value = index
+
+};
+const closeSidebar = () => {
+  drawer.value = false;
+};
+console.log(choose.value)
 </script>
+<style scoped>
+::v-deep .v-btn__overlay{
+  background: #d23f57;
+}
+.selected {
+  border-right: 3px solid #d23f57 ;
+}
+.btn-fixed{
+  position: fixed;
+  left: 0;
+}
+</style>
