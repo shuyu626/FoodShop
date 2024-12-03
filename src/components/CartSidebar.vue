@@ -8,6 +8,7 @@
   >
     <div
       class="d-flex flex-column justify-space-between"
+      style="height: 100%;"
     >
       <div>
         <v-toolbar
@@ -33,7 +34,7 @@
         <v-list
           v-for="product in products"
           :key="product"
-          class="d-flex flex-row justify-content-center align-center my-3"
+          class="d-flex flex-row align-center my-3"
         >
           <div class="d-flex flex-column ml-2 text-center">
             <v-btn
@@ -88,6 +89,7 @@
           text="Checkout Now ($ 220)"
         />
         <LongButton
+          text="VIEW CART"
           variant="outlined"
         />
       </div>

@@ -1,6 +1,6 @@
 <template>
   <v-btn
-    class="w-100 text-white my-2"
+    class="w-100 text-white my-2 text-capitalize font-weight-regular"
     :color="color"
   >
     {{ text }}

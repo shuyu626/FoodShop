@@ -1,7 +1,8 @@
 <template>
   <v-app-bar
-    elevation="0"
     style="height: 64px;"
+    v-bind:="$attrs"
+    scroll-behavior="elevate"
   >
     <v-container class="d-flex align-center">
       <div class="d-flex">
@@ -37,16 +38,15 @@
             density="compact"
             hide-details
             single-line
-            rounded="0"
             variant="plain"
           />
           <v-btn
             icon="mdi-magnify"
             height="40px"
-            rounded="e-true s-0"
             color="third"
             elevation="0"
             size="small"
+            rounded="0"
           />
         </div>
       </div>
@@ -56,10 +56,10 @@
           class="bg-transparent"
           prepend-icon="mdi-account-circle-outline"
           variant="flat"
+          :text="!$vuetify.display.xs ? 'ACCOUNT' : ''"
+          size="large"
           @click=" login = !login"
-        >
-          ACCOUNT
-        </v-btn>
+        />
         <v-btn
           class="bg-transparent"
           prepend-icon="mdi-cart-outline"
@@ -90,4 +90,6 @@ import { ref } from 'vue'
 const drawer = ref(false)
 const login = ref(false)
 const cart = ref(false)
+
+
 </script>
