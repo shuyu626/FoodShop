@@ -15,9 +15,8 @@ const router = createRouter({
 })
 
 
-router.beforeEach(async (to, from, next) => {
+router.afterEach(async () => {
   window.scrollTo(0, 0);
-  next();
 })
 
 // Workaround for https://github.com/vitejs/vite/issues/11804
