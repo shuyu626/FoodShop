@@ -2,7 +2,7 @@
   <v-container>
     <v-breadcrumbs
       :items="items"
-      class="pl-0"
+      class="pl-0 mt-12 mb-5 text-body-2"
     >
       <template #divider>
         <v-icon icon="mdi-chevron-right" />
@@ -12,19 +12,29 @@
       v-model="tab"
       color="primary"
     >
-      <v-tab value="Delivery">
+      <v-tab
+        value="Delivery"
+        class="text-capitalize"
+      >
         Delivery
       </v-tab>
-      <v-tab value="Dining Out">
+      <v-tab
+        value="Dining Out"
+        class="text-capitalize"
+      >
         Dining Out
       </v-tab>
-      <v-tab value="Nightlife">
+      <v-tab
+        value="Nightlife"
+        class="text-capitalize"
+      >
         Nightlife
       </v-tab>
       <v-spacer />
       <v-btn
-        text="FILTER"
+        text="RESET"
         color="primary"
+        @click="clear()"
       />
     </v-tabs>
 
@@ -111,7 +121,7 @@
                 </div>
               </div>
               
-              <div class="px-10 w-100">
+              <div class="px-10 px-md-0 px-lg-10 w-100">
                 <v-col
                   cols="12"
                   class="d-md-none"
@@ -124,13 +134,10 @@
                   />
                   <v-navigation-drawer
                     v-model="drawer"
-                    app
                     temporary
-                    style="width: 280px; border-right: 1px solid #BDBDBD;"
                   >
                     <div
                       class="d-flex flex-column"
-                      style="border-right: 1px solid #BDBDBD;"
                     >
                       <h4>Categories</h4>
                       <div
@@ -206,6 +213,15 @@
                 <v-col cols="12">
                   <v-row>
                     <v-col
+                      v-if="isEmpty"
+                      cols="12"
+                      class="text-center"
+                    >
+                      <h1 class="text-grey-lighten-1 text-h2 font-weight-medium my-15">
+                        No products match your filter criteria
+                      </h1>
+                    </v-col>
+                    <v-col
                       v-for="card in filteredCards"
                       :key="card"
                       cols="12"
@@ -231,20 +247,12 @@
             </v-col>
           </v-row>
         </v-tabs-window-item>
-
-        <!-- <v-tabs-window-item value="Dining Out">
-          Two
-        </v-tabs-window-item>
-
-        <v-tabs-window-item value="Nightlife">
-          Three
-        </v-tabs-window-item> -->
       </v-tabs-window>
     </v-card-text>
   </v-container>
 </template>
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 const items = ref([
   {
     title: 'Home',
@@ -290,28 +298,42 @@ const cards = ref([
 ]);
 const drawer = ref(false)
 const selectedCategories = ref([]);
-const selectedSortBy = ref('Popularity')
+const selectedSortBy = ref('Prise')
 const selectedStar = ref([]);
+const isEmpty = ref(false)
 
-
+// 依條件篩選商品
 const filteredCards = computed(() => {
     const filtered = cards.value.filter(card => {
-    const categoryMatches = selectedCategories.value.length === 0 || selectedCategories.value.includes(card.category);
-    const starMatches = selectedStar.value.length === 0 || selectedStar.value.some(star => card.star >= star);
-    const priceMatches = card.price >= range.value[0] && card.price <= range.value[1];
+    const categoryMatches = selectedCategories.value.length === 0 || selectedCategories.value.includes(card.category)
+    const starMatches = selectedStar.value.length === 0 || selectedStar.value.some(star => card.star >= star)
+    const priceMatches = card.price >= range.value[0] && card.price <= range.value[1]
     return categoryMatches && starMatches && priceMatches;
   });
+
   if (selectedSortBy.value === 'Prise') {
-    return filtered.sort((a, b) => a.price - b.price); // 按照價格升序排序
+    return filtered.sort((a, b) => a.price - b.price) // 價格排序 升序
   } else if (selectedSortBy.value === 'A-Z') {
     return filtered.sort((a, b) => a.title.localeCompare(b.title)); // 字符串比較
   } else if (selectedSortBy.value === 'Star') {
-    return filtered.sort((a, b) => b.star - a.star); // 按星級排序
+    return filtered.sort((a, b) => b.star - a.star) // 星星排序
   }
-  
   return filtered;
 });
 
+const clear = () =>{
+  selectedCategories.value = []
+  selectedStar.value = []
+  range.value = [0,100]
+  selectedSortBy.value = 'Prise'
+}
+watch(filteredCards, (newFiltered) => { // 確認符合條件的商品是否為空
+  if (newFiltered.length === 0) {
+    isEmpty.value = true;
+  } else {
+    isEmpty.value = false;
+  }
+});
 </script>
 <style scoped>
 ::v-deep  .v-slider-thumb__label{

@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar-image">
+  <div class="bg-image">
     <v-container>
       <div
         id="navbar"
@@ -24,13 +24,21 @@
           ACCOUNT
         </v-btn>
         <v-btn
-          style="color: white !important;"
+          stacked
           class="bg-transparent"
-          prepend-icon="mdi-cart-outline"
           variant="flat"
+          height="44"
+          style="color: white !important;"
           @click=" cart = !cart"
         >
-          ({{ cartStore.cartItemCount }})
+          <v-badge
+            color="second"
+            :content="cartStore.cartItemCount"
+          >
+            <v-icon>
+              mdi-cart-outline
+            </v-icon>
+          </v-badge>
         </v-btn>
         <v-btn
           style="color: white !important;"
@@ -68,8 +76,11 @@
         >
           <div class="d-flex rounded bg-white flex-wrap">
             <div class="d-flex align-center ps-5">
-              <v-icon icon="mdi-map-marker" /> 
-              <span class="me-10">New York</span>
+              <v-icon
+                color="third"
+                icon="mdi-map-marker"
+              /> 
+              <span class="me-10 text-third">New York</span>
             </div> 
             <v-btn
               prepend-icon="mdi-crosshairs-gps"
@@ -87,7 +98,7 @@
               rounded="0"
               class="flex-1 ps-5"
               variant="plain"
-              width="200px"
+              style="width: 200px;"
             />
             <v-btn
               height="48"
@@ -105,7 +116,7 @@
   </div>
   <div class="w-100 bg-second">
     <v-container>
-      <v-row>
+      <v-row class="my-lg-12">
         <v-col
           v-for="card in cards.slice(0, 4)"
           :key="card"
@@ -122,7 +133,7 @@
               :src="card.img"
               :sec="false"
               :desc="false"
-              class="text-center my-12"
+              class="text-center "
             >
               <template #title>
                 {{ card.title }}
@@ -274,7 +285,7 @@
       <v-row class="mt-5 mb-15">
         <v-col
           cols="12"
-          md="6"
+          md="4"
         >
           <v-img
             src="https://foodhub-nuxt.vercel.app/_nuxt/img/App.4927ff9.png"
@@ -284,10 +295,12 @@
         </v-col>
         <v-col
           cols="12"
-          md="6"
+          md="8"
         >
           <div class="mx-5 mx-sm-10">
-            <h1>
+            <h1
+              style="font-size: 40px;"
+            >
               Get the Mobile App
             </h1>
             <p class="text-third text-body-1">
@@ -307,10 +320,10 @@
                 value="radio-2"
               />
             </v-radio-group>
-            <div class="d-flex align-center w-md-66">
+            <div class="d-flex align-center w-xl-75">
               <v-text-field
                 placeholder="Email"
-                density="comfortable"
+                density="compact"
                 bg-color="white"
                 hide-details
                 single-line
@@ -318,7 +331,7 @@
                 variant="outlined"
               />
               <v-btn
-                height="48"
+                height="40"
                 rounded="e-true s-0"
                 color="#d23f57"
                 elevation="0"
@@ -350,7 +363,6 @@
       </v-row>
     </v-container>
   </div>
-  <!-- <Navbar /> -->
   <!-- 登入視窗 -->
   <LoginDialog v-model="login" />
   <!-- 側邊欄 -->
@@ -360,8 +372,8 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useCartStore } from '@/stores/cart'; 
-const cartStore = useCartStore();
+import { useCartStore } from '@/stores/cart'
+const cartStore = useCartStore()
 
 const cards = ref([
   {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/15.15c95d2.jpg',title:'Starbucks',discount:true},
@@ -392,16 +404,12 @@ const circleImage = ref([
 const drawer = ref(false)
 const login = ref(false)
 const cart = ref(false)
-
-
-
 </script>
 <style scoped>
-.navbar-image{
+.bg-image{
   width: 100%;
   height: 65vh;
   background: url(https://foodhub-nuxt.vercel.app/_nuxt/img/header-bg.d39c465.png);
   background-size: cover;
 }
-
 </style>
