@@ -13,10 +13,7 @@
           </v-avatar>
         </router-link>
         <v-spacer />
-        <!-- <template v-if="mobile">
-          <v-app-bar-nav-icon @click=" drawer = !drawer" />
-        </template> -->
-        <!-- <template v-else> -->
+
         <v-btn
           style="color: white !important;"
           class="bg-transparent"
@@ -33,7 +30,7 @@
           variant="flat"
           @click=" cart = !cart"
         >
-          (8)
+          ({{ cartStore.cartItemCount }})
         </v-btn>
         <v-btn
           style="color: white !important;"
@@ -44,7 +41,6 @@
           size="small"
           @click=" drawer = !drawer"
         />
-        <!-- </template> -->
       </div>
       
       <v-row class="text-center text-white mt-15">
@@ -98,6 +94,7 @@
               rounded="e-true s-0"
               color="#d23f57"
               elevation="0"
+              class="text-capitalize text-h6 font-weight-regular"
             >
               Search
             </v-btn>
@@ -124,7 +121,7 @@
             <Card
               :src="card.img"
               :sec="false"
-              :des="false"
+              :desc="false"
               class="text-center my-12"
             >
               <template #title>
@@ -140,24 +137,40 @@
     <v-container class="my-10">
       <v-row class="my-4">
         <v-col cols="12">
-          <h2>Collections</h2>
-          <div class="d-flex">
-            <h5 class="w-75">
-              Explore curated lists of top restaurants, cafes, pubs, and bars in New York, based on trends
-            </h5>
-            <v-spacer />
-            <router-link
-              to="/"
-              class="text-decoration-none"
-            >
-              <h4
-                style=" color:#d23f57;"
-                class="font-weight-regular"
+          <v-col cols="12">
+            <v-row no-gutters>
+              <v-col
+                cols="12"
+                md="10"
+                lg="10"
               >
-                View all collections
-              </h4>
-            </router-link>
-          </div>
+                <h2>Collections</h2>
+                <div class="d-flex">
+                  <h5 class=" text-grey-darken-1 font-weight-regular">
+                    Explore curated lists of top restaurants, cafes, pubs, and bars in New York, based on trends
+                  </h5>
+                </div>
+              </v-col>
+              <v-col
+                cols="12"
+                md="2"
+                lg="2"
+                class="mt-md-auto"
+              >
+                <router-link
+                  to="/"
+                  class="text-decoration-none"
+                >
+                  <h4
+                    style=" color:#d23f57;"
+                    class="font-weight-regular text-md-end"
+                  >
+                    View all collections
+                  </h4>
+                </router-link>
+              </v-col>
+            </v-row>
+          </v-col>
         </v-col>
         <v-col
           v-for="item in collectImg"
@@ -246,6 +259,7 @@
             <Card
               :src="card.img"
               :title="card.title"
+              :disc="card.discount"
             />
           </router-link>
         </v-col>
@@ -272,68 +286,71 @@
           cols="12"
           md="6"
         >
-          <h1>
-            Get the Mobile App
-          </h1>
-          <p class="text-third">
-            We will send you a link, open it on your phone to download the app
-          </p>
-          <v-radio-group
-            color="primary"  
-            inline
-            hide-details=""
-          >
-            <v-radio
-              label="Email"
-              value="radio-1"
-            />
-            <v-radio
-              label="Phone"
-              value="radio-2"
-            />
-          </v-radio-group>
-          <div class="d-flex align-center w-66">
-            <v-text-field
-              placeholder="Email"
-              density="comfortable"
-              bg-color="white"
-              hide-details
-              single-line
-              rounded="s-true e-0"
-              variant="outlined"
-            />
-            <v-btn
-              height="48"
-              rounded="e-true s-0"
-              color="#d23f57"
-              elevation="0"
+          <div class="mx-5 mx-sm-10">
+            <h1>
+              Get the Mobile App
+            </h1>
+            <p class="text-third text-body-1">
+              We will send you a link, open it on your phone to download the app
+            </p>
+            <v-radio-group
+              color="primary"  
+              inline
+              hide-details=""
             >
-              Search
-            </v-btn>
-          </div>
-          <p class="mt-4 mb-2">
-            Download App from
-          </p>
-          <div class="d-flex flex-wrap">
-            <div
-              class="me-4 rounded-0"
-            >
-              <img
-                src="https://foodhub-nuxt.vercel.app/_nuxt/img/google-play.430ca54.png"
+              <v-radio
+                label="Email"
+                value="radio-1"
+              />
+              <v-radio
+                label="Phone"
+                value="radio-2"
+              />
+            </v-radio-group>
+            <div class="d-flex align-center w-md-66">
+              <v-text-field
+                placeholder="Email"
+                density="comfortable"
+                bg-color="white"
+                hide-details
+                single-line
+                rounded="s-true e-0"
+                variant="outlined"
+              />
+              <v-btn
+                height="48"
+                rounded="e-true s-0"
+                color="#d23f57"
+                elevation="0"
               >
-            </div> 
-            <div
-              class="rounded-0"
-            >
-              <img
-                src="https://foodhub-nuxt.vercel.app/_nuxt/img/app-store.63e3986.png"
+                Search
+              </v-btn>
+            </div>
+            <p class="mt-4 mb-2 text-third">
+              Download App from
+            </p>
+            <div class="d-flex flex-wrap">
+              <div
+                class="me-4 rounded-0"
               >
+                <img
+                  src="https://foodhub-nuxt.vercel.app/_nuxt/img/google-play.430ca54.png"
+                >
+              </div> 
+              <div
+                class="rounded-0"
+              >
+                <img
+                  src="https://foodhub-nuxt.vercel.app/_nuxt/img/app-store.63e3986.png"
+                >
+              </div>
             </div>
           </div>
         </v-col>
       </v-row>
     </v-container>
   </div>
+  <!-- <Navbar /> -->
   <!-- 登入視窗 -->
   <LoginDialog v-model="login" />
   <!-- 側邊欄 -->
@@ -343,17 +360,18 @@
 
 <script setup>
 import { ref } from 'vue'
-
+import { useCartStore } from '@/stores/cart'; 
+const cartStore = useCartStore();
 
 const cards = ref([
-  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/15.15c95d2.jpg',title:'Starbucks'},
-  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/16.bbc24cb.jpg',title:'Mughal Masala'},
-  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/17.3634737.jpg',title:'Woondal'},
-  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/18.2a12c1e.jpg',title:'Red Chillies'},
-  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/19.a1e7280.jpg',title:'Starbucks'},
-  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/20.ce4b89f.jpg',title:'Mughal Masala'},
-  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/21.eee29b5.jpg',title:'Woondal'},
-  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/22.c99d20e.jpg',title:'Red Chillies'}
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/15.15c95d2.jpg',title:'Starbucks',discount:true},
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/16.bbc24cb.jpg',title:'Mughal Masala',discount:true},
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/17.3634737.jpg',title:'Woondal',discount:false},
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/18.2a12c1e.jpg',title:'Red Chillies',discount:true},
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/19.a1e7280.jpg',title:'Starbucks',discount:true},
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/20.ce4b89f.jpg',title:'Mughal Masala',discount:false},
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/21.eee29b5.jpg',title:'Woondal',discount:false},
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/22.c99d20e.jpg',title:'Red Chillies',discount:true}
 ])
 
 const collectImg = ref([
@@ -385,4 +403,5 @@ const cart = ref(false)
   background: url(https://foodhub-nuxt.vercel.app/_nuxt/img/header-bg.d39c465.png);
   background-size: cover;
 }
+
 </style>

@@ -127,11 +127,11 @@
             <v-btn
               v-for="(item, index) in category"
               :key="index"
-              height="50"
+              height="40"
               text
               variant="text"
               rounded="0"
-              class=" text-left justify-start text-capitalize"
+              class=" text-left justify-start text-capitalize text-third"
               :class="{'selected': selectedIndex === index}"
               @click="filterByCategory(item, index)"
             >
@@ -154,7 +154,7 @@
                   Categories
                 </v-btn>
               </div>
-              <h3 class="mb-3 pl-5">
+              <h3 class="mb-3 pl-8">
                 {{ selected }}
               </h3>
               <v-card
@@ -168,8 +168,13 @@
                     cols="12"
                     lg="10"
                   >
-                    <v-row no-gutters>
+                    <v-row
+                      class="d-flex flex-row mx-auto"
+                    >
                       <v-col
+                        cols="6"
+                        sm="4"
+                        md="4"
                         lg="3"
                         xl="2"
                       >
@@ -182,10 +187,15 @@
                         />
                       </v-col>
                       <v-col
-                        lg="9"
-                        xl="10"
+                        cols="6"
+                        sm="6"
+                        md="5"
+                        lg="8"
+                        xl="8"
                       >
-                        <h4>{{ product.title }}(Full)</h4>
+                        <h4 class="mt-1">
+                          {{ product.title }}(Full)
+                        </h4>
                         <v-chip
                           density="compact"
                           size="small"
@@ -212,8 +222,8 @@
                         >
                           <span
                             class="text-decoration-line-through"
-                          >$25</span>
-                          $22.5 
+                          >${{ product.price }}</span>
+                          ${{ product.discount }}
                           <span class="text-primary">10% off</span>
                         </p>
                         <p
@@ -223,21 +233,24 @@
                           (4 Pcs mutton in chicken keema gravy)
                         </p>
                       </v-col>
-                    </v-row>
-                  </v-col>
-                  <v-col
-                    cols="12"
-                    lg="2"
-                    class="my-auto"
-                  >
-                    <div>
-                      <v-btn
-                        variant="outlined"
-                        color="primary"
+                      <v-col
+                        cols="12"
+                        sm="2"
+                        md="3"
+                        lg="1"
+                        class="my-auto"
                       >
-                        ADD +
-                      </v-btn>
-                    </div>
+                        <div>
+                          <v-btn
+                            variant="outlined"
+                            color="primary"
+                            @click="addToCart(product)"
+                          >
+                            ADD +
+                          </v-btn>
+                        </div>
+                      </v-col>
+                    </v-row>
                   </v-col>
                 </v-row>
               </v-card>
@@ -533,6 +546,19 @@
 <script setup>
 import Comment from '@/components/Comment.vue';
 import { ref } from 'vue'
+import { useCartStore } from '@/stores/cart';
+import { useSnackbar } from 'vuetify-use-dialog'
+const createSnackbar = useSnackbar()
+const cartStore = useCartStore();
+const addToCart = (product) => {
+  cartStore.addItem(product);
+  createSnackbar({
+      text: '成功加入購物車' ,
+      snackbarProps: {
+        color: 'primary'
+      }
+    })
+};
 const items = ref([
   {
     title: 'Home',
@@ -558,19 +584,19 @@ const imgs = ref([
 ])
 
 const products = ref([
-  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/15.15c95d2.jpg',title:'Starbucks',cate:'Recomended'},
-  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/16.bbc24cb.jpg',title:'Mughal Masala',cate:'DPB Special Combos'},
-  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/19.a1e7280.jpg',title:'Starbucks',cate:'Chineese Starters'},
-  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/20.ce4b89f.jpg',title:'Mughal Masala',cate:'Chinese Main Course'},
-  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/22.c99d20e.jpg',title:'Red Chillies',cate:'Indian Main Course'},
-  {img:'https://imgs.699pic.com/images/600/169/053.jpg!list1x.v2',title:'Cookie',cate:'Rice & Pulao'},
-  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/foodFour.e242457.png',title:'Hamburger',cate:'Recomended'},
-  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/foodOne.f29cb9f.png',title:'Spaghetti',cate:'Pasta'},
-  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/foodTwo.3b74f91.png',title:'Pasta',cate:'Pasta'},
-  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/foodThree.fd71db5.png',title:'Gnocchi',cate:'Pasta'},
-  {img:'https://tokyo-kitchen.icook.network/uploads/recipe/cover/329605/64d988a20911786c.jpg',title:'Birthday Cake',cate:'Desserts'},
-  {img:'https://assets.blog.engoo.com/wp-content/uploads/sites/3/2017/10/08092749/shutterstock_1659922546.jpg',title:'Donburi',cate:'Rice & Pulao'},  
-  {img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-hmcnCcm7eMlmevp9lsZYlPegFX6w60ZIpeGmXXizGy5S-9PYRTCMXkcBpoUTDhrHGYk&usqp=CAU',title:'Tomato beef soup',cate:'Soup & wonton'}
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/15.15c95d2.jpg',title:'Starbucks',cate:'Recomended',price:150,discount:120},
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/16.bbc24cb.jpg',title:'Mughal Masala',cate:'DPB Special Combos',price:130,discount:110},
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/19.a1e7280.jpg',title:'Starbucks',cate:'Chineese Starters',price:80,discount:70},
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/20.ce4b89f.jpg',title:'Mughal Masala',cate:'Chinese Main Course',price:68,discount:58},
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/22.c99d20e.jpg',title:'Red Chillies',cate:'Indian Main Course',price:70,discount:65},
+  {img:'https://imgs.699pic.com/images/600/169/053.jpg!list1x.v2',title:'Cookie',cate:'Rice & Pulao',price:80,discount:60},
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/foodFour.e242457.png',title:'Hamburger',cate:'Recomended',price:90,discount:85},
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/foodOne.f29cb9f.png',title:'Spaghetti',cate:'Pasta',price:40,discount:35},
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/foodTwo.3b74f91.png',title:'Pasta',cate:'Pasta',price:50,discount:45},
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/foodThree.fd71db5.png',title:'Gnocchi',cate:'Pasta',price:55,discount:50},
+  {img:'https://tokyo-kitchen.icook.network/uploads/recipe/cover/329605/64d988a20911786c.jpg',title:'Birthday Cake',cate:'Desserts',price:70,discount:65},
+  {img:'https://assets.blog.engoo.com/wp-content/uploads/sites/3/2017/10/08092749/shutterstock_1659922546.jpg',title:'Donburi',cate:'Rice & Pulao',price:75,discount:70},  
+  {img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-hmcnCcm7eMlmevp9lsZYlPegFX6w60ZIpeGmXXizGy5S-9PYRTCMXkcBpoUTDhrHGYk&usqp=CAU',title:'Tomato beef soup',cate:'Soup & wonton',price:80,discount:75}
 ])
 	
 const tab = ref('option-1')

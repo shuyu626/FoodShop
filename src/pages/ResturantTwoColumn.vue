@@ -221,6 +221,7 @@
                           :title="card.title"
                           :star="card.star"
                           :price="`$${card.price}`"
+                          :disc="card.discount"
                         />
                       </router-link>
                     </v-col>
@@ -280,12 +281,12 @@ const radios = ref([
 const range = ref([0,100]);
 
 const cards = ref([
-  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/15.15c95d2.jpg',title:'Starbucks',category:'salad', star:4, price:'50'},
-  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/16.bbc24cb.jpg',title:'Mughal Masala',category:'sushi', star:4.3, price:'75'},
-  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/19.a1e7280.jpg',title:'Starbucks',category:'salad', star:5, price:'95'},
-  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/20.ce4b89f.jpg',title:'Mughal Masala',category:'salad', star:3.4, price:'60'},
-  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/22.c99d20e.jpg',title:'Red Chillies',category:'dessert', star:3.8, price:'100'},
-  {img:'https://imgs.699pic.com/images/600/169/053.jpg!list1x.v2',title:'cookie',category:'dessert', star:4.4, price:'30'}
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/15.15c95d2.jpg',title:'Starbucks',category:'salad', star:4, price:'50',discount:true},
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/16.bbc24cb.jpg',title:'Mughal Masala',category:'sushi', star:4.3, price:'75',discount:true},
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/19.a1e7280.jpg',title:'Starbucks',category:'salad', star:5, price:'95',discount:false},
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/20.ce4b89f.jpg',title:'Mughal Masala',category:'salad', star:3.4, price:'60',discount:true},
+  {img:'https://foodhub-nuxt.vercel.app/_nuxt/img/22.c99d20e.jpg',title:'Red Chillies',category:'dessert', star:3.8, price:'100',discount:true},
+  {img:'https://imgs.699pic.com/images/600/169/053.jpg!list1x.v2',title:'cookie',category:'dessert', star:4.4, price:'30',discount:false}
 ]);
 const drawer = ref(false)
 const selectedCategories = ref([]);
