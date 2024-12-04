@@ -4,7 +4,7 @@
     width="320"
     temporary
     location="end"
-    style="position: fixed;"
+    style="position: fixed;z-index: 1005;"
   >
     <div
       class="d-flex flex-column justify-space-between"
@@ -21,7 +21,7 @@
             size="small"
             color="third"
           />
-          <span class="mx-2 text-body-1 text-third font-weight-medium">1 Item</span>
+          <span class="mx-2 text-body-1 text-third font-weight-medium"> Item</span>
           <v-spacer />
           <v-btn
             icon="mdi-close"
@@ -31,6 +31,28 @@
           />
         </v-toolbar>
         <v-divider />
+        <div
+          v-if="cartStore.cartItemCount==0"
+          class=" my-15"
+        >
+          <router-link
+            to="/FoodMenu"
+            class="text-decoration-none"
+          > 
+            <div
+              class=" text-grey-lighten-1 text-center text-h5 font-weight-medium"
+              @click="close=!close"
+            >
+              Cart is empty!
+              <div>
+                Start shopping! <v-icon
+                  icon="mdi-cursor-default-click"
+                  size="small"
+                />
+              </div>
+            </div>
+          </router-link>
+        </div>
         <v-list
           v-for="(item, index) in cartStore.items"
           :key="index"
@@ -119,25 +141,24 @@ const props = defineProps({
 })
 const emit = defineEmits(['update:modelValue'])
 const close = ref(props.modelValue)
-console.log(close)
 
 const closeSidebar = () => {
   close.value = false;
 };
 
-
+// 商品數量 -1
 const increaseQuantity = (item) => {
-  cartStore.updateQuantity(item.title, item.quantity + 1);
+  cartStore.updateQuantity(item.title, item.quantity + 1)
 };
 
-// 減少商品數量
+// 商品數量 +1
 const decreaseQuantity = (item) => {
   if (item.quantity > 1) {
     cartStore.updateQuantity(item.title, item.quantity - 1);
   }
 };
 
-// 移除商品
+// 刪除商品
 const removeFromCart = (item) => {
   cartStore.removeItem(item.title);
 };

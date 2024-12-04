@@ -1,7 +1,7 @@
 <template>
   <v-toolbar
     class="position-fixed top-0 bg-white"
-    style="z-index: 50;"
+    style="z-index: 1005;"
     :class="{'shadow': scroll}"
   >
     <v-container class="d-flex align-center">
@@ -53,6 +53,16 @@
       <v-spacer />
       <div>
         <v-btn
+          v-if="$vuetify.display.xs"
+          class="bg-transparent"
+          icon="mdi-account-circle-outline"
+          variant="flat"
+          size="large"
+          rounded="0"
+          @click=" login = !login"
+        />
+        <v-btn
+          v-else
           class="bg-transparent"
           prepend-icon="mdi-account-circle-outline"
           variant="flat"
@@ -98,8 +108,8 @@ const drawer = ref(false)
 const login = ref(false)
 const cart = ref(false)
 const scroll = ref(false);
-import { useCartStore } from '@/stores/cart';
-const cartStore = useCartStore();
+import { useCartStore } from '@/stores/cart'
+const cartStore = useCartStore()
 const handleScroll = () => {
   if (window.scrollY > 64) { // 滾動超過64px
     scroll.value = true;

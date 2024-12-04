@@ -6,7 +6,7 @@
     <v-avatar size="large">
       <v-img
         alt="John"
-        :src="src"
+        :src="props.src"
       />
     </v-avatar>
     <div class="ml-5">
@@ -60,10 +60,9 @@
 <script setup>
 import { defineProps } from 'vue';
 const props = defineProps({
-    src:{
-        type:String,
-        default:'https://foodhub-nuxt.vercel.app/_nuxt/img/8.38098d6.png'
-    }
+  src:{
+    type:String,
+    default:'https://foodhub-nuxt.vercel.app/_nuxt/img/8.38098d6.png'
+  }
 })
-console.log(props.img)
 </script>
