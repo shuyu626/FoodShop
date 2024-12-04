@@ -32,8 +32,8 @@
         </v-toolbar>
         <v-divider />
         <v-list
-          v-for="product in products"
-          :key="product"
+          v-for="(item, index) in cartStore.items"
+          :key="index"
           class="d-flex flex-row align-center my-3"
         >
           <div class="d-flex flex-column ml-2 text-center">
@@ -42,13 +42,21 @@
               variant="outlined"
               color="primary"
               size="x-small"
+              width="28"
+              height="28"
+              class="mx-auto"
+              @click="increaseQuantity(item)"
             />
-            <span>{{ 1 }}</span>
+            <span class="my-2">{{ item.quantity }}</span>
             <v-btn
               icon="mdi-minus"
               variant="outlined"
               color="primary"
               size="x-small"
+              width="28"
+              height="28"
+              class="mx-auto"
+              @click="decreaseQuantity(item)"
             />
           </div>
           <div class="d-flex align-center text-left px-4">
@@ -56,29 +64,30 @@
               rounded
               style="width: 64px;height: 64px;"
             >
-              <v-img :src="product" />
+              <v-img :src="item.img" />
             </v-avatar>
             <div class="pl-6">
               <h4
                 class="d-inline-block text-truncate"
                 style="max-width: 120px;"
               >
-                Mughal Masala Order Food Online With 50% Off
+                {{ item.title }}
               </h4> 
               <p class="text-12 mb-0 text-body-2">
-                $530 x 1
+                ${{ item.price }} x 1
               </p> 
               <h4 class="text-primary">
-                500
+                ${{ item.discount }}
               </h4>
             </div>
           </div>
-          <div class="me-3">
+          <div class="me-3 ml-auto">
             <v-btn
               icon="mdi-close"
               color="third"
               size="small"
               variant="text"
+              @click="removeFromCart(item)"
             />
           </div>
         </v-list>
@@ -86,7 +95,8 @@
     
       <div class="px-2">
         <LongButton
-          text="Checkout Now ($ 220)"
+          :text="`Checkout Now ($${ cartStore.totalPrice })`"
+          @click="checkout"
         />
         <LongButton
           text="VIEW CART"
@@ -98,12 +108,9 @@
 </template>
 <script setup>
 import {  ref, defineProps, defineEmits, watch } from 'vue'
+import { useCartStore } from '@/stores/cart'; 
+const cartStore = useCartStore();
 
-const products = ref([
-  'https://foodhub-nuxt.vercel.app/_nuxt/img/1.d289046.png',
-  'https://foodhub-nuxt.vercel.app/_nuxt/img/2.2633985.png',
-  'https://foodhub-nuxt.vercel.app/_nuxt/img/3.4e7d7b9.png'
-])
 const props = defineProps({
   modelValue:{
     type:Boolean,
@@ -116,6 +123,30 @@ console.log(close)
 
 const closeSidebar = () => {
   close.value = false;
+};
+
+
+const increaseQuantity = (item) => {
+  cartStore.updateQuantity(item.title, item.quantity + 1);
+};
+
+// 減少商品數量
+const decreaseQuantity = (item) => {
+  if (item.quantity > 1) {
+    cartStore.updateQuantity(item.title, item.quantity - 1);
+  }
+};
+
+// 移除商品
+const removeFromCart = (item) => {
+  cartStore.removeItem(item.title);
+};
+
+// 結帳
+const checkout = () => {
+  if(cartStore.totalPrice){
+    alert(`Total Price: $${cartStore.totalPrice}`);
+  }
 };
 watch(() => props.modelValue, (newVal) => {
   close.value = newVal;

@@ -1,14 +1,17 @@
 <template>
   <v-card
     class="mx-auto"
-    max-height="100%"
-    max-width="100%"
   >
     <v-img
       :src="props.src"
       cover
+      class="position-relative"
     />
-
+    <span
+      v-if="disc"
+      class="position-absolute top-0 left-0 mt-5 bg-primary rounded-e-xl text-center"
+      style="height: 32px;width: 95px;line-height: 32px;font-size: 14px;"
+    >Flat 30% Off</span>
     <v-card-item>
       <v-card-title>
         <slot name="title" />
@@ -27,11 +30,16 @@
             color="yellow-darken-3"
             class="ml-auto"
           />
-          <span style="font-size: 14px;">{{ star }}/5</span>
+          <span
+            class="font-weight-bold"
+            style="font-size: 14px;"
+          >{{ star }}
+            <span class="font-weight-regular">/5</span>
+          </span>
         </div>
       </template>
-      <template v-if="des">
-        <v-card-content class="text-third">
+      <template v-if="desc">
+        <v-card-text class="text-third pa-0">
           <h3 class="font-weight-regular text-body-2">
             <span
               style="color:#d23f57;"
@@ -39,7 +47,7 @@
             >{{ price }}</span>
             • Cofee, set menu • 15 - 20 min
           </h3>
-        </v-card-content>
+        </v-card-text>
       </template>
     </v-card-item>
   </v-card>
@@ -55,11 +63,15 @@ const props = defineProps({
         type:String,
         default:'https://foodhub-nuxt.vercel.app/_nuxt/img/15.15c95d2.jpg'
     },
+    disc:{
+      type:Boolean,
+      default:false
+    },
     sec:{
       type:Boolean,
       default:true
     },
-    des:{
+    desc:{
       type:Boolean,
       default:true
     },
