@@ -1,8 +1,8 @@
 <template>
-  <v-app-bar
-    style="height: 64px;"
-    v-bind:="$attrs"
-    scroll-behavior="elevate"
+  <v-toolbar
+    class="position-fixed top-0 bg-white"
+    style="z-index: 50;"
+    :class="{'shadow': scroll}"
   >
     <v-container class="d-flex align-center">
       <div class="d-flex">
@@ -61,12 +61,20 @@
           @click=" login = !login"
         />
         <v-btn
+          stacked
           class="bg-transparent"
-          prepend-icon="mdi-cart-outline"
           variant="flat"
+          height="44"
           @click=" cart = !cart"
         >
-          (8)
+          <v-badge
+            color="error"
+            :content="cartStore.cartItemCount"
+          >
+            <v-icon>
+              mdi-cart-outline
+            </v-icon>
+          </v-badge>
         </v-btn>
         <v-btn
           class="bg-transparent"
@@ -78,18 +86,38 @@
         />
       </div>
     </v-container>
-  </v-app-bar>
- 
+  </v-toolbar>
   <LoginDialog v-model="login" />
   <!-- 側邊欄 -->
   <SideBar v-model="drawer" />
   <CartSidebar v-model="cart" />
 </template>
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 const drawer = ref(false)
 const login = ref(false)
 const cart = ref(false)
+const scroll = ref(false);
+import { useCartStore } from '@/stores/cart';
+const cartStore = useCartStore();
+const handleScroll = () => {
+  if (window.scrollY > 64) { // 滾動超過64px
+    scroll.value = true;
+  } else {
+    scroll.value = false;
+  }
+};
 
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll);
+});
 
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', handleScroll);
+});
 </script>
+<style scoped>
+.v-toolbar.shadow{
+    box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12);
+}
+</style>
