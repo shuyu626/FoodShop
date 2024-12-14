@@ -17,7 +17,7 @@
     </div>
   </div>
     
-  <div class="d-flex align-content-center my-1">
+  <div class="d-flex align-center my-1">
     <v-rating
       :model-value="5"
       density="compact"

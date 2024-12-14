@@ -5,7 +5,7 @@
     :class="{'shadow': scroll}"
   >
     <v-container class="d-flex align-center">
-      <div class="d-flex">
+      <div class="d-flex flex-grow-1">
         <router-link to="/">
           <v-avatar
             size="large"
@@ -14,7 +14,7 @@
           </v-avatar>
         </router-link>
         <div
-          class="flex-grow-1 rounded bg-white border-sm ms-8 my-auto d-none d-md-flex"
+          class=" rounded bg-white border-sm ms-8 my-auto d-none d-md-flex"
         >
           <div
             class="d-flex align-center ps-5 text-third"
@@ -50,7 +50,6 @@
           />
         </div>
       </div>
-      <v-spacer />
       <div>
         <v-btn
           v-if="$vuetify.display.xs"
@@ -130,4 +129,5 @@ onBeforeUnmount(() => {
 .v-toolbar.shadow{
     box-shadow: 0 2px 4px -1px rgba(0, 0, 0, .2), 0 4px 5px 0 rgba(0, 0, 0, .14), 0 1px 10px 0 rgba(0, 0, 0, .12);
 }
+
 </style>

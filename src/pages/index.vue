@@ -3,7 +3,7 @@
     <v-container>
       <div
         id="navbar"
-        class="w-100 d-flex justify-content-center align-items-center mt-6"
+        class="w-100 d-flex align-center mt-6"
       >
         <router-link to="/">
           <v-avatar
@@ -96,14 +96,14 @@
               hide-details
               single-line
               rounded="0"
-              class="flex-1 ps-5"
+              class="ps-5"
               variant="plain"
-              style="width: 200px;"
+              style="min-width: 200px;"
             />
             <v-btn
               height="48"
               rounded="e-true s-0"
-              color="#d23f57"
+              color="primary"
               elevation="0"
               class="text-capitalize text-h6 font-weight-regular"
             >
@@ -148,40 +148,38 @@
     <v-container class="my-10">
       <v-row class="my-4">
         <v-col cols="12">
-          <v-col cols="12">
-            <v-row no-gutters>
-              <v-col
-                cols="12"
-                md="10"
-                lg="10"
+          <v-row no-gutters>
+            <v-col
+              cols="12"
+              md="10"
+              lg="10"
+            >
+              <h2>Collections</h2>
+              <div class="d-flex">
+                <h5 class=" text-grey-darken-1 font-weight-regular">
+                  Explore curated lists of top restaurants, cafes, pubs, and bars in New York, based on trends
+                </h5>
+              </div>
+            </v-col>
+            <v-col
+              cols="12"
+              md="2"
+              lg="2"
+              class="mt-md-auto"
+            >
+              <router-link
+                to="/"
+                class="text-decoration-none"
               >
-                <h2>Collections</h2>
-                <div class="d-flex">
-                  <h5 class=" text-grey-darken-1 font-weight-regular">
-                    Explore curated lists of top restaurants, cafes, pubs, and bars in New York, based on trends
-                  </h5>
-                </div>
-              </v-col>
-              <v-col
-                cols="12"
-                md="2"
-                lg="2"
-                class="mt-md-auto"
-              >
-                <router-link
-                  to="/"
-                  class="text-decoration-none"
+                <h4
+                  style=" color:#d23f57;"
+                  class="font-weight-regular text-md-end"
                 >
-                  <h4
-                    style=" color:#d23f57;"
-                    class="font-weight-regular text-md-end"
-                  >
-                    View all collections
-                  </h4>
-                </router-link>
-              </v-col>
-            </v-row>
-          </v-col>
+                  View all collections
+                </h4>
+              </router-link>
+            </v-col>
+          </v-row>
         </v-col>
         <v-col
           v-for="item in collectImg"
@@ -309,7 +307,7 @@
             <v-radio-group
               color="primary"  
               inline
-              hide-details=""
+              hide-details
             >
               <v-radio
                 label="Email"
@@ -320,7 +318,7 @@
                 value="radio-2"
               />
             </v-radio-group>
-            <div class="d-flex align-center w-xl-75">
+            <div class="d-flex align-center w-xl-66">
               <v-text-field
                 placeholder="Email"
                 density="compact"

@@ -1,36 +1,33 @@
 <template>
-  <v-footer class="d-block pa-0">
+  <v-footer class="flex-column pa-0">
     <div class="w-100 mt-8 mb-15">
       <v-container>
         <v-row>
           <v-col cols="12">
             <h2>Popular Localities In & Around New York</h2>
           </v-col>
-          <template
+          <v-col
             v-for="i in 4"
             :key="i"
+            cols="12"
+            sm="6"
+            lg="3"
+            to="/"
+            class="d-flex flex-column"
           >
-            <v-col
-              cols="12"
-              sm="6"
-              lg="3"
-              to="/"
-              class="d-flex flex-column"
-            >
-              <div>
-                <router-link
-                  v-for="(place, index) in places"
-                  :key="index"
-                  :to="place.url"
-                  class="text-decoration-none text-black"
-                >
-                  <div class="mb-2 ">
-                    {{ place.name }} <span class="text-third">({{ place.count }} places)</span>
-                  </div>
-                </router-link>
-              </div>
-            </v-col>
-          </template>
+            <div>
+              <router-link
+                v-for="(place, index) in places"
+                :key="index"
+                :to="place.url"
+                class="text-decoration-none text-black"
+              >
+                <div class="mb-2 ">
+                  {{ place.name }} <span class="text-third">({{ place.count }} places)</span>
+                </div>
+              </router-link>
+            </div>
+          </v-col>
         </v-row>
       </v-container>
     </div>

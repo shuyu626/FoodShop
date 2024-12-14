@@ -91,7 +91,7 @@
             <div class="pl-6">
               <h4
                 class="d-inline-block text-truncate"
-                style="max-width: 120px;"
+                style="max-width: 100px;"
               >
                 {{ item.title }}
               </h4> 
@@ -146,12 +146,12 @@ const closeSidebar = () => {
   close.value = false;
 };
 
-// 商品數量 -1
+// 商品數量 +1
 const increaseQuantity = (item) => {
   cartStore.updateQuantity(item.title, item.quantity + 1)
 };
 
-// 商品數量 +1
+// 商品數量 -1
 const decreaseQuantity = (item) => {
   if (item.quantity > 1) {
     cartStore.updateQuantity(item.title, item.quantity - 1);

@@ -40,7 +40,7 @@
           <h1 class="mb-3">
             Starbucks
           </h1>
-          <div class="d-flex align-content-center">
+          <div class="d-flex align-center">
             <v-rating
               :model-value="5"
               density="compact"
@@ -119,7 +119,7 @@
         value="option-1"
       >
         <!-- 大尺寸篩選 -->
-        <div class="d-flex flex-row">
+        <div class="d-flex flex-row ">
           <div
             class="d-none d-md-flex flex-column"
             style="width: 280px; border-right: 1px solid #BDBDBD;"
@@ -128,7 +128,6 @@
               v-for="(item, index) in category"
               :key="index"
               height="40"
-              text
               variant="text"
               rounded="0"
               class=" text-left justify-start text-capitalize text-third"

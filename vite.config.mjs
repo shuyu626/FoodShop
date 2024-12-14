@@ -24,7 +24,7 @@ export default defineConfig({
     Vuetify({
       autoImport: true,
       styles: {
-        configFile: 'src/styles/settings.scss',
+        configFile: 'src/styles/settings.scss', // 指定全局樣式配置檔案，讓你能自定義 Vuetify 主題顏色、佈局
       },
     }),
     Components(),
@@ -66,9 +66,9 @@ export default defineConfig({
     port: 3000,
   },
   css: {
-    preprocessorOptions: {
+    preprocessorOptions: { // 設定 CSS 預處理器的選項
       sass: {
-        api: 'modern-compiler',
+        api: 'modern-compiler', // 使用現代 Sass 編譯器
       },
     },
   },

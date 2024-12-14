@@ -99,7 +99,7 @@
                     hide-details
                   >
                     <v-radio
-                      color="red"
+                      color="primary"
                       :label="radio"
                       :value="radio"
                     />
@@ -304,13 +304,13 @@ const isEmpty = ref(false)
 
 // 依條件篩選商品
 const filteredCards = computed(() => {
-    const filtered = cards.value.filter(card => {
+  const filtered = cards.value.filter(card => {
     const categoryMatches = selectedCategories.value.length === 0 || selectedCategories.value.includes(card.category)
     const starMatches = selectedStar.value.length === 0 || selectedStar.value.some(star => card.star >= star)
     const priceMatches = card.price >= range.value[0] && card.price <= range.value[1]
     return categoryMatches && starMatches && priceMatches;
   });
-
+  
   if (selectedSortBy.value === 'Prise') {
     return filtered.sort((a, b) => a.price - b.price) // 價格排序 升序
   } else if (selectedSortBy.value === 'A-Z') {
@@ -342,14 +342,13 @@ watch(filteredCards, (newFiltered) => { // 確認符合條件的商品是否為�
   background: #d23f57;
   border: 1px solid #d23f57;
   border-radius: 50% 50% 0 50%;
-  transform:translateY(-20%) translateY(-12px) translateX(-50%) rotate(45deg) !important;
+  transform:translateY(-20%) translateY(-5px) translateX(-50%) rotate(45deg) !important;
 }
 
 ::v-deep .v-slider-thumb__label::before {
   display: none;
-  
 }
 ::v-deep .v-slider-thumb__label div{
-    transform:rotate(-45deg) !important;
-  }
+  transform:rotate(-45deg) !important;
+}
 </style>

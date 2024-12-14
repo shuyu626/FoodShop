@@ -33,6 +33,7 @@ const scrollTo = () => {
 };
 
 const showNavbar = ref(true);
+// 滾動軸的距離超過視窗一半的時候，出現navbar
 const handleScroll = () => {
   if (route.path === '/'){
     showNavbar.value = window.scrollY > window.innerHeight / 2;
@@ -41,6 +42,7 @@ const handleScroll = () => {
   }
 }
 
+// 偵測是否為首頁，是的話隱藏navbar
 watch(()=> route.path,
 (newPath)=>{
   if(newPath === '/'){
@@ -49,6 +51,7 @@ watch(()=> route.path,
     showNavbar.value = true
   }
 })
+// 元件掛載後監聽滾動軸
 onMounted(() => {
   if (route.path === '/') {
     window.addEventListener('scroll', handleScroll);
@@ -58,7 +61,6 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll);
 });
-
 
 </script>
 <style scoped>
