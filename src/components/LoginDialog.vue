@@ -1,10 +1,9 @@
 <template>
   <v-dialog
     max-width="450"
+    scroll-strategy="none"
   >
-    <v-card
-      class="d-flex flex-column"
-    >
+    <v-card>
       <v-container class="py-5 px-8">
         <div class="mt-2 mb-5 text-center">
           <h3>Welcome To Ecommerce</h3>
@@ -54,6 +53,3 @@
     </v-card>
   </v-dialog>
 </template>
-<script setup>
-
-</script>
